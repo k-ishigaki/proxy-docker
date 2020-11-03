@@ -4,20 +4,30 @@ LABEL maintainer="Kazuki Ishigaki<k-ishigaki@frontier.hokudai.ac.jp>"
 
 EXPOSE 8080
 
-RUN apk add --no-cache squid gettext curl
+# 'http_proxy' regular expression for `sed`.
+# \1 : Scheme (http:// or https://)
+# \2 : User authentification (<user>:<password>)
+# \3 : Proxy's host (ip address or domain)
+# \4 : Proxy's port number
+ENV regular_expression='^(https?:\/\/)([^:]+:[^@]+)??@??([^:]+):([0-9]+)\/?$'
+
+RUN export HTTP_PROXY_AUTH=`echo $HTTP_PROXY | sed -r 's/'"$regular_expression"'/basic:*:\2/'` && \
+    apk add --no-cache squid gettext
 
 RUN touch /var/log/squid/access.log \
     && chown squid:squid /var/log/squid/access.log
 
-# Create template conf
-COPY squid.conf.template /tmp/
+COPY squid.conf.template /
 
-# Create endpoint script
 RUN { \
     echo '#!/bin/sh -e'; \
-    echo 'envsubst < /tmp/squid.conf.template > /etc/squid.conf'; \
+    echo 'export proxy_auth=`echo $HTTP_PROXY | sed -r '"'"'s/'"'"'$regular_expression'"'"'/\2/'"'"'`'; \
+    echo 'export proxy_host=`echo $HTTP_PROXY | sed -r '"'"'s/'"'"'$regular_expression'"'"'/\3/'"'"'`'; \
+    echo 'export proxy_port=`echo $HTTP_PROXY | sed -r '"'"'s/'"'"'$regular_expression'"'"'/\4/'"'"'`'; \
+    echo 'envsubst < /squid.conf.template > /etc/squid.conf'; \
     echo '/usr/sbin/squid -f /etc/squid.conf'; \
-    echo 'tail -f /dev/null'; \
+    echo 'exec "$@"'; \
     } > /entrypoint && chmod +x /entrypoint
+ENTRYPOINT [ "/entrypoint" ]
 
-CMD [ "/entrypoint" ]
+CMD [ "/bin/sh", "-c", "while sleep 1000; do :; done" ]

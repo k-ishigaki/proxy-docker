@@ -1,29 +1,41 @@
 # Proxy standby port
 http_port 8080
 
+# Disable logging hostname
+visible_hostname none
+
 # Enable DNS (uses /etc/resolv.conf)
 dns_defnames on
 
-# 'localnet' addresses are inhered from squid.conf.default
-acl localnet dst 0.0.0.1-0.255.255.255
-acl localnet dst 10.0.0.0/8
-acl localnet dst 100.64.0.0/10
-acl localnet dst 169.254.0.0/16
-acl localnet dst 172.16.0.0/12
-acl localnet dst 192.168.0.0/16
-acl localnet dst fc00::/7
-acl localnet dst fe80::/10
+acl localnet src 0.0.0.1-0.255.255.255
+acl localnet src 10.0.0.0/8
+acl localnet src 100.64.0.0/10
+acl localnet src 169.254.0.0/16
+acl localnet src 172.16.0.0/12
+acl localnet src 192.168.0.0/16
+acl localnet src fc00::/7
+acl localnet src fe80::/10
 
-# Allow access from localhost
+acl to_localnet_fast dst -n 0.0.0.1-0.255.255.255
+acl to_localnet_fast dst -n 10.0.0.0/8
+acl to_localnet_fast dst -n 100.64.0.0/10
+acl to_localnet_fast dst -n 169.254.0.0/16
+acl to_localnet_fast dst -n 172.16.0.0/12
+acl to_localnet_fast dst -n 192.168.0.0/16
+acl to_localnet_fast dst -n fc00::/7
+acl to_localnet_fast dst -n fe80::/10
+
+acl to_localhost_fast dst -n 127.0.0.0/8
+
+# Allow access from localnet
 http_access allow localhost
+http_access allow localnet
 
-# Set cache peer to the higher proxy
-# 'localnet' addresses are also allowed to access directly
-never_direct allow !localnet
-cache_peer ${proxy_host} parent ${proxy_port} 0 proxy-only no-digest no-netdb-exchange login=${proxy_user}:${proxy_pass}
+# Proxy configuration
+never_direct allow !to_localhost_fast !to_localnet_fast
+cache_peer $proxy_host parent $proxy_port 0 proxy-only no-digest no-netdb-exchange login=$proxy_auth
 
 # Make Squid hidden from the higher proxy
-visible_hostname ishigakikazukinoMac-mini
 forwarded_for delete
 via off
 cache deny all
