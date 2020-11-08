@@ -1,6 +1,6 @@
 # proxy-docker
 
-A proxy server converts a basic authentification proxy to non authentification proxy.
+A proxy server which adds a Basic Authorization header for another proxy.
 Alpine base image, using Squid.
 
 ## Features
