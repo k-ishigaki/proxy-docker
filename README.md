@@ -1,6 +1,6 @@
 # proxy-docker
 
-A proxy server which adds a Basic Authorization header for another proxy.
+A proxy server which adds a Basic Authorization header for another proxy.  
 Alpine base image, using Squid.
 
 ## Features
@@ -10,7 +10,7 @@ Alpine base image, using Squid.
 
 ## Launch
 
-1. Clone repository to your project
+1. Clone repository
 ```Shell
 git clone https://github.com/k-ishigaki/proxy-docker
 ```
