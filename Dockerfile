@@ -16,6 +16,7 @@ RUN export HTTP_PROXY_AUTH=$(echo $HTTP_PROXY | \
         sed -r 's/%(..)/\\x\1/g' | \
         xargs -I {} echo -e {}) && \
     export HTTP_PROXY=$(echo $HTTP_PROXY | sed -r 's/'"$regular_expression"'/\1\3:\4/') && \
+    export HTTPS_PROXY=$HTTP_PROXY && \
     apk add --no-cache squid gettext
 
 RUN touch /var/log/squid/access.log \

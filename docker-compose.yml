@@ -1,10 +1,8 @@
 version: "3.8"
 
 x-proxy_settings: &proxy_settings
-    http_proxy: &http_proxy "${HTTP_PROXY_FOR_PROXY:?HTTP_PROXY_FOR_PROXY must be set. Prease read README}"
-    https_proxy: *http_proxy
-    HTTP_PROXY: *http_proxy
-    HTTPS_PROXY: *http_proxy
+    HTTP_PROXY: "${HTTP_PROXY_FOR_PROXY:?HTTP_PROXY_FOR_PROXY must be set. Prease read README}"
+    HTTPS_PROXY: "${HTTP_PROXY_FOR_PROXY}"
 
 services:
     proxy:
