@@ -13,7 +13,6 @@ ENV regular_expression='^(https?:\/\/)([^:]+:[^@]+)??@??([^:]+):([0-9]+)\/?$'
 
 RUN export HTTP_PROXY_AUTH=$(echo $HTTP_PROXY | \
         sed -r 's/'"$regular_expression"'/basic:*:\2/' | \
-        sed -r 's/%27/'"'"'/g' | \
         sed -r 's/%(..)/\\x\1/g' | \
         xargs -I {} echo -e {}) && \
     export HTTP_PROXY=$(echo $HTTP_PROXY | sed -r 's/'"$regular_expression"'/\1\3:\4/') && \
