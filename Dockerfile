@@ -23,6 +23,7 @@ RUN touch /var/log/squid/access.log \
     && chown squid:squid /var/log/squid/access.log
 
 COPY squid.conf.template /
+COPY .direct_access_domains /
 
 RUN { \
     echo '#!/bin/sh -e'; \
