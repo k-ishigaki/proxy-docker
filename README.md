@@ -34,3 +34,8 @@ NOTE: If you are using Docker Toolbox, Extra port forwarding setting is needed t
 ```Shell
 docker-compose down --rmi all --volume
 ```
+
+## Add direct access domains
+
+You can add direct access (no proxy) domains to `.direct_access_domains`.  
+Squid will access to these domains directly.
