@@ -15,7 +15,7 @@ Alpine base image, using Squid.
 git clone https://github.com/k-ishigaki/proxy-docker
 ```
 
-2. Specify a proxy settings and run
+2. Specify a proxy settings and run in background
 ```Shell
 cd proxy-docker
 docker load ./alpine.tar
@@ -27,7 +27,7 @@ HTTP_PROXY_FOR_PROXY=http://<proxy_user>:<proxy_password>@<proxy_host>:<proxy_po
 curl -x localhost:8080 https://www.google.com
 ```
 
-NOTE: If you are using Docker Toolbox, Extra port forwarding setting is needed to VirtualBox.
+NOTE: If you are using Docker Toolbox, a extra port forwarding setting is needed to VirtualBox.
 
 ## Exit and remove all
 
