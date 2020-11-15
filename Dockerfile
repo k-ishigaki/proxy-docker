@@ -30,10 +30,9 @@ RUN { \
     echo 'export proxy_auth=`echo $HTTP_PROXY | sed -r '"'"'s/'"'"'$regular_expression'"'"'/\2/'"'"'`'; \
     echo 'export proxy_host=`echo $HTTP_PROXY | sed -r '"'"'s/'"'"'$regular_expression'"'"'/\3/'"'"'`'; \
     echo 'export proxy_port=`echo $HTTP_PROXY | sed -r '"'"'s/'"'"'$regular_expression'"'"'/\4/'"'"'`'; \
-    echo 'envsubst < /squid.conf.template > /etc/squid.conf'; \
-    echo '/usr/sbin/squid -f /etc/squid.conf'; \
+    echo 'envsubst < /squid.conf.template > /etc/squid/squid.conf'; \
     echo 'exec "$@"'; \
     } > /entrypoint && chmod +x /entrypoint
 ENTRYPOINT [ "/entrypoint" ]
 
-CMD [ "/bin/sh", "-c", "while sleep 1000; do :; done" ]
+CMD [ "squid", "-N" ]
