@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.4"
 
 x-proxy_settings: &proxy_settings
     HTTP_PROXY: "${HTTP_PROXY_FOR_PROXY:?HTTP_PROXY_FOR_PROXY must be set. Prease read README}"
