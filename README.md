@@ -1,4 +1,4 @@
-# proxy-docker
+# Dockerized Auth-Delegating Proxy for Upstream Servers
 
 A proxy server that adds a Basic Authorization header for another proxy.  
 Alpine-based image built on Squid.
