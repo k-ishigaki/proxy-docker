@@ -15,21 +15,29 @@ Alpine base image, using Squid.
 git clone https://github.com/k-ishigaki/proxy-docker
 ```
 
-2. Prepare .env
+2. Move into the project directory
 ```Shell
 cd proxy-docker
+```
+
+3. Load Alpine image
+```Shell
 docker load -i ./alpine.tar
+```
+
+4. Prepare .env
+```Shell
 cp .env.example .env
 vi .env
 ```
 Make sure to set `HTTP_PROXY_FOR_PROXY` in `.env` (required).
 
-3. Run in background
+5. Run in background
 ```Shell
 docker compose up -d
 ```
 
-4. Test the connection
+6. Test the connection
 ```Shell
 curl -x localhost:8080 https://www.google.com
 ```
