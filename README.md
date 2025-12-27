@@ -1,12 +1,12 @@
 # proxy-docker
 
-A proxy server which adds a Basic Authorization header for another proxy.  
-Alpine base image, using Squid.
+A proxy server that adds a Basic Authorization header for another proxy.  
+Alpine-based image built on Squid.
 
 ## Features
 
- * Requres Docker Compose only
- * No proxy configurations are needed before launch
+ * Requires only Docker Compose
+ * No system-wide proxy settings are needed before launch
 
 ## Overview
 
@@ -26,9 +26,14 @@ flowchart LR
   proxy --> internet
 ```
 
-## Launch
+## Prerequisites
 
-1. Clone repository
+ * Docker
+ * Docker Compose
+
+## Setup
+
+1. Clone the repository
 ```Shell
 git clone https://github.com/k-ishigaki/proxy-docker
 ```
@@ -38,36 +43,48 @@ git clone https://github.com/k-ishigaki/proxy-docker
 cd proxy-docker
 ```
 
-3. Load Alpine image
+3. Load the bundled Alpine image
 ```Shell
 docker load -i ./alpine.tar
 ```
 
-4. Prepare .env
+4. Create and edit `.env`
 ```Shell
 cp .env.example .env
 vi .env
 ```
 Make sure to set `HTTP_PROXY_FOR_PROXY` in `.env` (required).
 
-5. Run in background
+## Run
+
+1. Start in the background
 ```Shell
 docker compose up -d
 ```
 
-6. Test the connection
+## Verify
+
+1. Test connectivity
 ```Shell
 curl -x localhost:8080 https://www.google.com
 ```
 If you changed `HOST_BIND_PORT`, use that value instead of `8080`.
 
-## Exit and remove all
+## Operations & Config
+
+### Add direct access domains
+
+Add direct-access (no proxy) domains to `.direct_access_domains`.  
+Squid will access these domains directly.
+
+Example:
+```text
+example.com
+api.example.com
+```
+
+## Stop & Cleanup
 
 ```Shell
 docker compose down --rmi all --volume
 ```
-
-## Add direct access domains
-
-You can add direct access (no proxy) domains to `.direct_access_domains`.  
-Squid will access to these domains directly.
