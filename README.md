@@ -3,6 +3,8 @@
 A proxy server that adds a Basic Authorization header for another proxy.  
 Alpine-based image built on Squid.
 
+Japanese reference (Qiita): https://qiita.com/Splascope/items/98c6bbcd76ff54a8f723
+
 ## Features
 
  * Requires only Docker Compose
