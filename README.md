@@ -8,6 +8,24 @@ Alpine base image, using Squid.
  * Requres Docker Compose only
  * No proxy configurations are needed before launch
 
+## Overview
+
+```mermaid
+flowchart LR
+  subgraph local[Local Network]
+    app[Proxy Client Application]
+    subgraph container[Docker Container]
+      authproxy[Auth Delegation Proxy Server]
+    end
+    proxy[Authenticated Proxy Server]
+  end
+  internet[Internet]
+
+  app -- "No auth header" --> authproxy
+  authproxy -- "Authorization: Basic header added" --> proxy
+  proxy --> internet
+```
+
 ## Launch
 
 1. Clone repository
