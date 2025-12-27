@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:3.23.2
 
 LABEL maintainer="Kazuki Ishigaki<gakia5310027@gmail.com>"
 
