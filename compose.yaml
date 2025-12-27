@@ -4,6 +4,7 @@ x-proxy_settings: &proxy_settings
 
 services:
     proxy:
+        restart: unless-stopped
         build:
             context: .
             args:
