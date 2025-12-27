@@ -19,7 +19,7 @@ git clone https://github.com/k-ishigaki/proxy-docker
 ```Shell
 cd proxy-docker
 docker load ./alpine.tar
-HTTP_PROXY_FOR_PROXY=http://<proxy_user>:<proxy_password>@<proxy_host>:<proxy_port> HOST_PORT=8080 docker-compose up -d
+HTTP_PROXY_FOR_PROXY=http://<proxy_user>:<proxy_password>@<proxy_host>:<proxy_port> HOST_PORT=8080 docker compose up -d
 ```
 
 3. Test the connection
@@ -32,7 +32,7 @@ NOTE: If you are using Docker Toolbox, a extra port forwarding setting is needed
 ## Exit and remove all
 
 ```Shell
-docker-compose down --rmi all --volume
+docker compose down --rmi all --volume
 ```
 
 ## Add direct access domains

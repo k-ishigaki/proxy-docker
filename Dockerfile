@@ -1,6 +1,6 @@
 FROM alpine
 
-LABEL maintainer="Kazuki Ishigaki<k-ishigaki@frontier.hokudai.ac.jp>"
+LABEL maintainer="Kazuki Ishigaki<gakia5310027@gmail.com>"
 
 EXPOSE 8080
 
