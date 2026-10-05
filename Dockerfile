@@ -31,6 +31,9 @@ RUN { \
     echo 'export proxy_host=`echo $HTTP_PROXY | sed -r '"'"'s/'"'"'$regular_expression'"'"'/\3/'"'"'`'; \
     echo 'export proxy_port=`echo $HTTP_PROXY | sed -r '"'"'s/'"'"'$regular_expression'"'"'/\4/'"'"'`'; \
     echo 'envsubst < /squid.conf.template > /etc/squid/squid.conf'; \
+    echo '# An unclean shutdown can leave a stale PID file that prevents container restarts.'; \
+    echo '# Remove it from the default PID path used by Alpine Squid.'; \
+    echo 'rm -f /var/run/squid.pid'; \
     echo 'exec "$@"'; \
     } > /entrypoint && chmod +x /entrypoint
 ENTRYPOINT [ "/entrypoint" ]
